@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.2", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "catflow-service-filter"
+dynamic = ["version"]
+readme = "README.md"
+description = "Inference service for an object recognition pipeline"
+authors = [{ name = "Ian Kilgore", email = "iank@iank.org"}]
+license = {file = "LICENSE"}
+requires-python = ">=3.7"
+dependencies = [
+  "catflow-worker>=0.1.6",
+]
+
+[tool.setuptools]
+packages = ["catflow_service_filter"]
+
+[project.scripts]
+catflow-service-filter = "catflow_service_filter:main"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-asyncio",
+  "pytest-datafiles",
+]
+
+[tool.setuptools_scm]
+write_to = "catflow_service_filter/_version.py"
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    # Fail on any warnings that are not explicitly matched below
+    "error",
+]
