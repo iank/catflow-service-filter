@@ -6,12 +6,15 @@ build-backend = "setuptools.build_meta"
 name = "catflow-service-filter"
 dynamic = ["version"]
 readme = "README.md"
-description = "Inference service for an object recognition pipeline"
+description = "Vector DB filtering service for an object recognition pipeline"
 authors = [{ name = "Ian Kilgore", email = "iank@iank.org"}]
 license = {file = "LICENSE"}
 requires-python = ">=3.7"
 dependencies = [
-  "catflow-worker>=0.1.6",
+  "catflow-worker>=0.1.7",
+  "numpy",
+  "pgvector",
+  "psycopg2",
 ]
 
 [tool.setuptools]
@@ -24,7 +27,6 @@ catflow-service-filter = "catflow_service_filter:main"
 dev = [
   "pytest",
   "pytest-asyncio",
-  "pytest-datafiles",
 ]
 
 [tool.setuptools_scm]

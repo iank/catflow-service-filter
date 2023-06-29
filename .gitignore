@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 .*.swp
-/catflow_service_inference/_version.py
+/catflow_service_filter/_version.py
