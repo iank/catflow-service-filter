@@ -140,5 +140,31 @@ async def test_worker_add_far_embedding(vdb):
     assert frames[0].key == "novel.png"
 
     # verify that it was actually added to DB
-    assert "novel.png" in vdb.database
+    assert "novel" in vdb.database
     assert "similar_to_the_first_one" not in vdb.database
+
+
+@pytest.mark.asyncio
+async def test_worker_add_uuid_only(vdb):
+    filter_handler = create_filter_handler(vdb)
+
+    # Expected input: list of EmbeddedFrame
+    video = VideoFile(key="test.mp4")
+    frames = [
+        EmbeddedFrame(
+            key="d4345b64-1e80-44b1-9e51-828c51325fd0.png",
+            source=video,
+            embedding=Embedding(vector=[1.0, 1.0, 1.0]),
+        ),
+    ]
+    embeddings_msg = EmbeddedFrameSchema(many=True).dump(frames)
+
+    status, responses = await filter_handler(
+        embeddings_msg, "filter.embeddings", None, None
+    )
+
+    assert status is True
+    assert len(responses) == 1
+
+    assert "d4345b64-1e80-44b1-9e51-828c51325fd0" in vdb.database
+    assert "d4345b64-1e80-44b1-9e51-828c51325fd0.png" not in vdb.database

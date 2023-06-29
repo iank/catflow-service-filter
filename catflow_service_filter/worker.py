@@ -81,7 +81,8 @@ def create_filter_handler(db):
             embedding = frame.embedding
 
             if db.check_novel(embedding):
-                db.add(frame.key, frame.source.key, embedding)
+                uuid, ext = frame.key.split(".")
+                db.add(uuid, frame.source.key, embedding)
                 rawframe = RawFrame(key=frame.key, source=frame.source)
                 logging.info(f"[-] Adding {rawframe!s} to database")
                 responseobjects.append(rawframe)
